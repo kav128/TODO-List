@@ -1,3 +1,7 @@
 <component name="CopyrightManager">
-  <settings default="kav128" />
+  <settings default="kav128">
+    <module2copyright>
+      <element module="All" copyright="kav128" />
+    </module2copyright>
+  </settings>
 </component>

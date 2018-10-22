@@ -6,149 +6,75 @@
 
 package com.kav128.todo;
 
-import java.sql.*;
-import java.util.Hashtable;
+import com.kav128.data.DataReader;
+import com.kav128.data.DataWriter;
+import com.kav128.todo.data.TaskModifyTrigger;
 
-public class TaskList
+import java.util.*;
+
+public class TaskList implements Iterable<Task>
 {
-    private UserList userList;
-    private Connection connection;
+    private List<Task> taskList;
+    private DataReader reader;
+    private DataWriter writer;
 
-    private static final int loadPackageSize = 200;
-
-    private int lastLoadedId;
-    private Hashtable<Integer, Task> taskTable;
-    private int totalDbSize = -1;
-
-    public TaskList(Connection connection)
+    public TaskList(DataReader reader, DataWriter writer)
     {
-        this.connection = connection;
-        taskTable = new Hashtable<>();
-        lastLoadedId = -1;
-
-        userList = new UserList(connection);
+        this.reader = reader;
+        this.writer = writer;
+        taskList = new ArrayList<>();
+        load();
     }
 
-    public int loadMore()
+    public Task createTask(String title, String description, Date deadline)
     {
-        int loaded = 0;
-        try
-        {
-            PreparedStatement ps = connection.prepareStatement("SELECT TOP (?) ID " +
-                    "FROM Tasks " +
-                    "WHERE ID > ?");
-            ps.setInt(1, loadPackageSize);
-            ps.setInt(2, lastLoadedId);
-            ResultSet rs = ps.executeQuery();
-            while(rs.next())
-            {
-                int curID = rs.getInt("ID");
-                taskTable.put(curID, new Task(curID, connection));
-                loaded++;
-                lastLoadedId = curID;
-            }
-        }
-        catch (SQLException e)
-        {
-            e.printStackTrace();
-        }
-        return loaded;
-    }
-
-    public int totalCount()
-    {
-        if (totalDbSize < 0)
-        {
-            try
-            {
-                Statement st = connection.createStatement();
-                ResultSet rs =  st.executeQuery(
-                        "SELECT COUNT(*) FROM Tasks");
-                if (rs.next())
-                    totalDbSize = rs.getInt(0);
-            }
-            catch (SQLException e)
-            {
-                e.printStackTrace();
-            }
-        }
-
-        return totalDbSize;
-    }
-
-    private Task load(int ID)
-    {
-        if (taskTable.contains(ID))
-            return taskTable.get(ID);
-
-        Task task = new Task(ID, connection);
-        taskTable.put(ID, task);
+        UUID uuid = writer.newRecord();
+        TaskModifyTrigger trigger = new TaskModifyTrigger(writer, uuid);
+        Task task = new Task(uuid, title, description, deadline, false, trigger);
+        taskList.add(task);
+        writer.setField("title", title);
+        writer.setField("description", description);
+        writer.setField("deadline", deadline);
+        writer.setField("completed", false);
+        writer.accept();
         return task;
     }
 
-    public int loadedCount()
+    public Task get(int index)
     {
-        return taskTable.size();
+        return taskList.get(index);
     }
 
-    public Task getTask(int ID)
+    public void remove(int index)
     {
-        Task task = taskTable.get(ID);
-        if (task == null)
-        {
-            try
-            {
-                PreparedStatement checkTaskStatement = connection.prepareStatement(
-                        "SELECT COUNT(*) " +
-                        "FROM Tasks " +
-                        "WHERE ID = ?");
-                checkTaskStatement.setInt(1, ID);
-                ResultSet resultSet = checkTaskStatement.executeQuery();
-                resultSet.next();
-                int result = resultSet.getInt(1);
-                if (result > 0)
-                    task = load(ID);
-            }
-            catch (SQLException e)
-            {
-                e.printStackTrace();
-            }
-        }
-        return task;
+        Task task = taskList.get(index);
+        taskList.remove(task);
+        writer.remove(task.getUuid());
     }
 
-    public UserList getUserList()
+    @Override
+    public Iterator<Task> iterator()
     {
-        return userList;
+        return taskList.iterator();
     }
 
-    public void add(Task task)
+    private void load()
     {
-        User curUser = userList.getCurUser();
-        if (curUser == null)
+        while (reader.read())
         {
-            // Здесь могло бы быть исключение
-            return;
+            UUID uuid = reader.getUUID();
+            String title = reader.getString("title");
+            String description = reader.getString("description");
+            Date deadline = reader.getDate("deadline");
+            Boolean completed = reader.getBoolean("completed");
+            TaskModifyTrigger trigger = new TaskModifyTrigger(writer, uuid);
+            Task task = new Task(uuid, title, description, deadline, completed, trigger);
+            taskList.add(task);
         }
-        task.setAuthor(curUser);
-        task.setDbConnection(connection);
-        task.writeToDb();
-        taskTable.put(task.getDbID(), task);
     }
 
-    public void remove(int dbID)
+    public int count()
     {
-        try
-        {
-            PreparedStatement ps = connection.prepareStatement("DELETE FROM Tasks WHERE ID = ?");
-            ps.setInt(1, dbID);
-            int deletedCount = ps.executeUpdate();
-            if (deletedCount > 0)
-                taskTable.remove(dbID);
-        }
-        catch (SQLException e)
-        {
-            e.printStackTrace();
-        }
+        return taskList.size();
     }
 }
