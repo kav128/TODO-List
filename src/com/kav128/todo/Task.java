@@ -13,7 +13,7 @@ import java.util.UUID;
 
 public class Task
 {
-    private UUID uuid;
+    private final UUID uuid;
     private String title;
     private String description;
     private Date deadline;

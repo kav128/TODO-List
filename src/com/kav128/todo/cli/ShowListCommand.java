@@ -10,7 +10,7 @@ import com.kav128.todo.TaskList;
 
 class ShowListCommand implements Command
 {
-    private TaskList taskList;
+    private final TaskList taskList;
 
     ShowListCommand(TaskList taskList)
     {

@@ -10,8 +10,8 @@ import com.kav128.todo.TaskList;
 
 class RemoveTaskCommand implements Command
 {
-    private TaskList taskList;
-    private int index;
+    private final TaskList taskList;
+    private final int index;
 
     RemoveTaskCommand(TaskList taskList, int index)
     {

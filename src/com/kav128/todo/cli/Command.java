@@ -6,7 +6,7 @@
 
 package com.kav128.todo.cli;
 
-public interface Command
+interface Command
 {
     void execute();
 }

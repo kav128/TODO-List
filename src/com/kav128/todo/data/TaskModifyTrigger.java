@@ -13,8 +13,8 @@ import java.util.UUID;
 
 public class TaskModifyTrigger
 {
-    private DataWriter writer;
-    private UUID uuid;
+    private final DataWriter writer;
+    private final UUID uuid;
 
     public TaskModifyTrigger(DataWriter writer, UUID uuid)
     {

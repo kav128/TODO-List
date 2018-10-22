@@ -12,9 +12,9 @@ import com.kav128.todo.TaskList;
 
 class EditTaskCommand implements Command
 {
-    private Task task;
-    private String field;
-    private String newValue;
+    private final Task task;
+    private final String field;
+    private final String newValue;
 
     EditTaskCommand(TaskList taskList, int index, String field, String newValue)
     {

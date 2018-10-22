@@ -10,7 +10,7 @@ import com.kav128.data.DataSource;
 
 class CommitCommand implements Command
 {
-    private DataSource dataSource;
+    private final DataSource dataSource;
 
     CommitCommand(DataSource dataSource)
     {

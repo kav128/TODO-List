@@ -11,10 +11,10 @@ import com.kav128.todo.TaskList;
 
 class NewTaskCommand implements Command
 {
-    private String title;
-    private String description;
-    private Date deadline;
-    private TaskList taskList;
+    private final String title;
+    private final String description;
+    private final Date deadline;
+    private final TaskList taskList;
 
     NewTaskCommand(String title, String description, Date deadline, TaskList taskList)
     {

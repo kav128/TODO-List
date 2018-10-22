@@ -11,7 +11,7 @@ import com.kav128.data.XMLDataSource;
 import com.kav128.todo.TaskList;
 import com.kav128.todo.cli.CommandLineInterpreter;
 
-public class Main
+class Main
 {
     public static void main(String[] args)
     {

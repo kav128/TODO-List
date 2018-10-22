@@ -11,8 +11,8 @@ import java.util.List;
 
 class DataBuffer
 {
-    private List<BufferRecord> records;
-    private List<BufferRecord> removedRecords;
+    private final List<BufferRecord> records;
+    private final List<BufferRecord> removedRecords;
 
     DataBuffer()
     {

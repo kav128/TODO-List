@@ -32,7 +32,7 @@ public class XMLDataSource extends DataSource
     private Document writeDocument;
     private NodeList root;
     private int documentPosition;
-    private String documentRootName;
+    private final String documentRootName;
     private Element rootWriteElement;
 
     public XMLDataSource(String fileName, String documentRootName)

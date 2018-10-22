@@ -12,7 +12,7 @@ import java.util.Set;
 
 class DataRecord
 {
-    private Map<String, String> data;
+    private final Map<String, String> data;
 
     DataRecord()
     {

@@ -19,9 +19,9 @@ import java.util.UUID;
 
 public class TaskList implements Iterable<Task>
 {
-    private List<Task> taskList;
-    private DataReader reader;
-    private DataWriter writer;
+    private final List<Task> taskList;
+    private final DataReader reader;
+    private final DataWriter writer;
 
     public TaskList(DataSource source)
     {

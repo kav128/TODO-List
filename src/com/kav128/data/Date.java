@@ -14,7 +14,7 @@ import java.util.Calendar;
 public class Date implements Comparable<Date>
 {
     private java.util.Date date;
-    private Calendar calendar = Calendar.getInstance();
+    private final Calendar calendar = Calendar.getInstance();
     private DateFormat dateFormat;
 
     public Date(java.util.Date date)

@@ -13,8 +13,8 @@ class BufferRecord
         NoChanges, Added, Removed, Edited
     }
 
-    private DataRecord data;
-    private DataRecord newData;
+    private final DataRecord data;
+    private final DataRecord newData;
     private RecordState state;
 
     BufferRecord()

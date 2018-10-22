@@ -19,7 +19,7 @@ public class CSVDataSource extends DataSource
     private Csv.Reader reader;
     private Csv.Writer writer;
     private List<String> titleRow;
-    private String[] fields;
+    private final String[] fields;
 
     public CSVDataSource(String fileName, String[] fields)
     {

@@ -16,8 +16,8 @@ import java.util.Scanner;
 
 public class CommandLineInterpreter
 {
-    private TaskList taskList;
-    private DataSource dataSource;
+    private final TaskList taskList;
+    private final DataSource dataSource;
     private DateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy");
 
     public CommandLineInterpreter(TaskList taskList, DataSource dataSource)
@@ -71,7 +71,7 @@ public class CommandLineInterpreter
         String title = "";
         String description = "";
         String deadlineString = "";
-        Date deadline = null;
+        Date deadline;
 
         for (int i = 1; i < args.length; i++)
         {

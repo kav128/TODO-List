@@ -10,7 +10,7 @@ import com.kav128.todo.Task;
 
 class ShowTaskCommand implements Command
 {
-    private Task task;
+    private final Task task;
 
     ShowTaskCommand(Task task)
     {
