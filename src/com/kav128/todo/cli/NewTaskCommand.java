@@ -6,9 +6,8 @@
 
 package com.kav128.todo.cli;
 
+import com.kav128.data.Date;
 import com.kav128.todo.TaskList;
-
-import java.util.Date;
 
 public class NewTaskCommand implements Command
 {

@@ -7,12 +7,11 @@
 package com.kav128.todo.cli;
 
 import com.kav128.data.DataSource;
+import com.kav128.data.Date;
 import com.kav128.todo.TaskList;
 
 import java.text.DateFormat;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.Scanner;
 
 public class CommandLineInterpreter
@@ -68,12 +67,11 @@ public class CommandLineInterpreter
 
     private NewTaskCommand parseNewTaskCommand(String[] args)
     {
-        NewTaskCommand command;
 
         String title = "";
         String description = "";
         String deadlineString = "";
-        Date deadline = new Date(0);
+        Date deadline = null;
 
         for (int i = 1; i < args.length; i++)
         {
@@ -91,14 +89,7 @@ public class CommandLineInterpreter
             }
         }
 
-        try
-        {
-            deadline = dateFormat.parse(deadlineString);
-        }
-        catch (ParseException e)
-        {
-            e.printStackTrace();
-        }
+        deadline = new Date(deadlineString);
 
         return new NewTaskCommand(title, description, deadline, taskList);
     }

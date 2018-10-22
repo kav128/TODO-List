@@ -10,7 +10,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
-public class DataRecord
+class DataRecord
 {
     private Map<String, String> data;
 
@@ -24,17 +24,17 @@ public class DataRecord
         data.put(field, value);
     }
 
-    public String getValue(String field)
+    String getValue(String field)
     {
         return data.get(field);
     }
 
-    public boolean hasField(String field)
+    boolean hasField(String field)
     {
         return data.containsKey(field);
     }
 
-    public String[] getFieldArray()
+    String[] getFieldArray()
     {
         Set<String> strings = data.keySet();
         String[] arr = new String[strings.size()];

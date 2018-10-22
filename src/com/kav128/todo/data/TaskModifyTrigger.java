@@ -7,8 +7,8 @@
 package com.kav128.todo.data;
 
 import com.kav128.data.DataWriter;
+import com.kav128.data.Date;
 
-import java.util.Date;
 import java.util.UUID;
 
 public class TaskModifyTrigger

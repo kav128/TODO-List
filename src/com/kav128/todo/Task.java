@@ -6,9 +6,9 @@
 
 package com.kav128.todo;
 
+import com.kav128.data.Date;
 import com.kav128.todo.data.TaskModifyTrigger;
 
-import java.util.Date;
 import java.util.UUID;
 
 public class Task

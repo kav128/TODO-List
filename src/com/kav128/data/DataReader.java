@@ -6,10 +6,6 @@
 
 package com.kav128.data;
 
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.UUID;
 
 public class DataReader
@@ -19,8 +15,6 @@ public class DataReader
 
     private DataRecord record;
     private int bufferPosition;
-
-    private DateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy");
 
     DataReader(DataSource source)
     {
@@ -62,15 +56,7 @@ public class DataReader
     }
     public Date getDate(String keyName)
     {
-        try
-        {
-            return dateFormat.parse(getString(keyName));
-        }
-        catch (ParseException e)
-        {
-            e.printStackTrace();
-        }
-        return null;
+        return new Date(getString(keyName));
     }
     public UUID getUUID()
     {

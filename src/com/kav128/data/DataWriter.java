@@ -6,9 +6,6 @@
 
 package com.kav128.data;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.UUID;
 
 public class DataWriter
@@ -21,8 +18,6 @@ public class DataWriter
     private final DataBuffer buffer;
     private DataRecord record;
     private Action action;
-
-    private DateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy");
 
     DataWriter(DataSource source)
     {
@@ -62,7 +57,7 @@ public class DataWriter
 
     public void setField(String field, Date value)
     {
-        record.setValue(field,dateFormat.format(value));
+        record.setValue(field, value.toString());
     }
 
     public void accept()
