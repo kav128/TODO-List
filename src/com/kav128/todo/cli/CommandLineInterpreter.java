@@ -127,7 +127,7 @@ public class CommandLineInterpreter
         switch (args[1])
         {
             case "task":
-                return new ShowTaskCommand(taskList.get(Integer.parseInt(args[2])));
+                return new ShowTaskCommand(taskList.get(Integer.parseInt(args[2]) - 1));
             case "tasks":
                 return new ShowListCommand(taskList);
         }
