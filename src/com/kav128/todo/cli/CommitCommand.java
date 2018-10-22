@@ -8,11 +8,11 @@ package com.kav128.todo.cli;
 
 import com.kav128.data.DataSource;
 
-public class CommitCommand implements Command
+class CommitCommand implements Command
 {
     private DataSource dataSource;
 
-    public CommitCommand(DataSource dataSource)
+    CommitCommand(DataSource dataSource)
     {
         this.dataSource = dataSource;
     }

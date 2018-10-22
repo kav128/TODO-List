@@ -9,14 +9,14 @@ package com.kav128.todo.cli;
 import com.kav128.data.Date;
 import com.kav128.todo.TaskList;
 
-public class NewTaskCommand implements Command
+class NewTaskCommand implements Command
 {
     private String title;
     private String description;
     private Date deadline;
     private TaskList taskList;
 
-    public NewTaskCommand(String title, String description, Date deadline, TaskList taskList)
+    NewTaskCommand(String title, String description, Date deadline, TaskList taskList)
     {
         this.title = title;
         this.description = description;

@@ -10,18 +10,18 @@ import com.kav128.data.Date;
 import com.kav128.todo.Task;
 import com.kav128.todo.TaskList;
 
-public class EditTaskCommand implements Command
+class EditTaskCommand implements Command
 {
     private Task task;
     private String field;
     private String newValue;
 
-    public EditTaskCommand(TaskList taskList, int index, String field, String newValue)
+    EditTaskCommand(TaskList taskList, int index, String field, String newValue)
     {
         this(taskList.get(index), field, newValue);
     }
 
-    public EditTaskCommand(Task task, String field, String newValue)
+    private EditTaskCommand(Task task, String field, String newValue)
     {
         this.task = task;
         this.field = field;
