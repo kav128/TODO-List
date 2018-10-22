@@ -7,6 +7,7 @@
 package com.kav128.todo;
 
 import com.kav128.data.DataReader;
+import com.kav128.data.DataSource;
 import com.kav128.data.DataWriter;
 import com.kav128.todo.data.TaskModifyTrigger;
 
@@ -18,10 +19,10 @@ public class TaskList implements Iterable<Task>
     private DataReader reader;
     private DataWriter writer;
 
-    public TaskList(DataReader reader, DataWriter writer)
+    public TaskList(DataSource source)
     {
-        this.reader = reader;
-        this.writer = writer;
+        this.reader = source.getReader();
+        this.writer = source.getWriter();
         taskList = new ArrayList<>();
         load();
     }

@@ -69,4 +69,14 @@ public abstract class DataSource
     protected abstract void beginWrite();
     protected abstract void endWrite();
     protected abstract void writeRecord(DataRecord record);
+
+    public DataReader getReader()
+    {
+        return new DataReader(this);
+    }
+
+    public DataWriter getWriter()
+    {
+        return new DataWriter(this);
+    }
 }

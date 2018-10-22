@@ -22,7 +22,7 @@ public class DataReader
 
     private DateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy");
 
-    public DataReader(DataSource source)
+    DataReader(DataSource source)
     {
         this.source = source;
         buffer = source.buffer;

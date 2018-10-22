@@ -19,15 +19,13 @@ public class DataWriter
     }
 
     private final DataBuffer buffer;
-    private final DataSource source;
     private DataRecord record;
     private Action action;
 
     private DateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy");
 
-    public DataWriter(DataSource source)
+    DataWriter(DataSource source)
     {
-        this.source = source;
         buffer = source.buffer;
     }
 
