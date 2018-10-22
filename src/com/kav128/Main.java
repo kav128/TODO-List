@@ -6,9 +6,10 @@
 
 package com.kav128;
 
-import com.kav128.data.CSVDataSource;
 import com.kav128.data.DataReader;
+import com.kav128.data.DataSource;
 import com.kav128.data.DataWriter;
+import com.kav128.data.XMLDataSource;
 import com.kav128.todo.TaskList;
 import com.kav128.todo.cli.CommandLineInterpreter;
 
@@ -16,8 +17,7 @@ public class Main
 {
     public static void main(String[] args)
     {
-        String[] todoFields = new String[]{"uuid", "title", "description", "deadline", "completed"};
-        CSVDataSource source = new CSVDataSource("tasks.csv", todoFields);
+        DataSource source = new XMLDataSource("tasks.xml", "tasklist");
         source.open();
         DataReader reader = new DataReader(source);
         DataWriter writer = new DataWriter(source);
