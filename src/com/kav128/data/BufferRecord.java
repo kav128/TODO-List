@@ -43,7 +43,7 @@ class BufferRecord
         }
     }
 
-    public String getData(String field)
+    String getData(String field)
     {
         switch (state)
         {
@@ -57,17 +57,17 @@ class BufferRecord
         }
     }
 
-    public RecordState getState()
+    RecordState getState()
     {
         return state;
     }
 
-    public void setAdded()
+    void setAdded()
     {
         state = RecordState.Added;
     }
 
-    public void setRemoved()
+    void setRemoved()
     {
         state = RecordState.Removed;
     }
@@ -85,7 +85,7 @@ class BufferRecord
         return record;
     }
 
-    public void applyChanges()
+    void applyChanges()
     {
         for (String editedField : newData.getFieldArray())
             data.setValue(editedField, newData.getValue(editedField));

@@ -119,7 +119,7 @@ public class XMLDataSource extends DataSource
             transformer.setOutputProperty(OutputKeys.INDENT, "yes");
             transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "4");
             DOMSource source = new DOMSource(writeDocument);
-            FileOutputStream stream = new FileOutputStream("tasks.xml");
+            FileOutputStream stream = new FileOutputStream(connectionString);
             StreamResult result = new StreamResult(stream);
             transformer.transform(source, result);
         }

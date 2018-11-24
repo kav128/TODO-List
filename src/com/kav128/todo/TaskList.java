@@ -25,10 +25,10 @@ public class TaskList implements Iterable<Task>
 
     public TaskList(DataSource source)
     {
+        // DAL, layer architecture, facade,
         this.reader = source.getReader();
         this.writer = source.getWriter();
         taskList = new ArrayList<>();
-        load();
     }
 
     public Task createTask(String title, String description, Date deadline)
@@ -63,7 +63,7 @@ public class TaskList implements Iterable<Task>
         return taskList.iterator();
     }
 
-    private void load()
+    public void load()
     {
         while (reader.read())
         {

@@ -21,7 +21,7 @@ public class DataWriter
 
     DataWriter(DataSource source)
     {
-        buffer = source.buffer;
+        buffer = source.getBuffer();
     }
 
     public UUID newRecord()

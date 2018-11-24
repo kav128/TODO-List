@@ -16,7 +16,7 @@ class EditTaskCommand implements Command
     private final String field;
     private final String newValue;
 
-    EditTaskCommand(TaskList taskList, int index, String field, String newValue)
+    private EditTaskCommand(TaskList taskList, int index, String field, String newValue)
     {
         this(taskList.get(index), field, newValue);
     }
@@ -26,6 +26,19 @@ class EditTaskCommand implements Command
         this.task = task;
         this.field = field;
         this.newValue = newValue;
+    }
+
+    static Command parse(String[] args)
+    {
+        int index;
+        String field;
+        String value;
+
+        index = Integer.parseInt(args[0]) - 1;
+        field = args[1].substring(1);
+        value = args[2];
+
+        return new EditTaskCommand(UI.instance().getTaskList(), index, field, value);
     }
 
     @Override

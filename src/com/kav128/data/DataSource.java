@@ -10,7 +10,7 @@ public abstract class DataSource
 {
     protected final String connectionString;
     protected boolean opened;
-    protected final DataBuffer buffer;
+    private final DataBuffer buffer;
 
     DataSource(String connectionString)
     {
@@ -18,6 +18,11 @@ public abstract class DataSource
         opened = false;
 
         buffer = new DataBuffer();
+    }
+
+    DataBuffer getBuffer()
+    {
+        return buffer;
     }
 
     public void open()

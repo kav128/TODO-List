@@ -19,7 +19,7 @@ public class DataReader
     DataReader(DataSource source)
     {
         this.source = source;
-        buffer = source.buffer;
+        buffer = source.getBuffer();
         bufferPosition = 0;
     }
 

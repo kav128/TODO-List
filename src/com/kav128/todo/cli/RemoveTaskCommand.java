@@ -13,10 +13,16 @@ class RemoveTaskCommand implements Command
     private final TaskList taskList;
     private final int index;
 
-    RemoveTaskCommand(TaskList taskList, int index)
+    private RemoveTaskCommand(TaskList taskList, int index)
     {
         this.taskList = taskList;
         this.index = index;
+    }
+
+    static Command parse(String[] args)
+    {
+        int index = Integer.parseInt(args[0]) - 1;
+        return new RemoveTaskCommand(UI.instance().getTaskList(), index);
     }
 
     @Override

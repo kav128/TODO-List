@@ -16,12 +16,37 @@ class NewTaskCommand implements Command
     private final Date deadline;
     private final TaskList taskList;
 
-    NewTaskCommand(String title, String description, Date deadline, TaskList taskList)
+    private NewTaskCommand(String title, String description, Date deadline, TaskList taskList)
     {
         this.title = title;
         this.description = description;
         this.deadline = deadline;
         this.taskList = taskList;
+    }
+
+    static NewTaskCommand parse(String[] args)
+    {
+        String title = "";
+        String description = "";
+        Date deadline = null;
+
+        for (int i = 0; i < args.length; i++)
+        {
+            switch (args[i++])
+            {
+                case "-title":
+                    title = args[i];
+                    break;
+                case "-description":
+                    description = args[i];
+                    break;
+                case "-deadline":
+                    deadline = new Date(args[i]);
+                    break;
+            }
+        }
+
+        return new NewTaskCommand(title, description, deadline, UI.instance().getTaskList());
     }
 
     @Override

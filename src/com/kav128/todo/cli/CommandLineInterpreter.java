@@ -7,23 +7,22 @@
 package com.kav128.todo.cli;
 
 import com.kav128.data.DataSource;
-import com.kav128.data.Date;
 import com.kav128.todo.TaskList;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.Scanner;
 
 public class CommandLineInterpreter
 {
     private final TaskList taskList;
     private final DataSource dataSource;
-    private DateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy");
+    private final CommandFactory factory;
 
-    public CommandLineInterpreter(TaskList taskList, DataSource dataSource)
+    CommandLineInterpreter(TaskList taskList, DataSource dataSource)
     {
         this.taskList = taskList;
         this.dataSource = dataSource;
+        factory = new CommandFactory();
     }
 
     public void run()
@@ -49,79 +48,16 @@ public class CommandLineInterpreter
     private Command parseCommand(String commandLine)
     {
         String[] args = commandLine.split(" ");
-        switch (args[0])
-        {
-            case "add":
-                return parseNewTaskCommand(args);
-            case "edit":
-                return parseEditTaskCommand(args);
-            case "remove":
-                return parseRemoveTaskCommand(args);
-            case "show":
-                return parseShowCommand(args);
-            case "commit":
-                return new CommitCommand(dataSource);
-        }
-        return null;
+        return factory.getFromString(args[0], Arrays.copyOfRange(args, 1, args.length));
     }
 
-    private NewTaskCommand parseNewTaskCommand(String[] args)
+    TaskList getTaskList()
     {
-
-        String title = "";
-        String description = "";
-        String deadlineString = "";
-        Date deadline;
-
-        for (int i = 1; i < args.length; i++)
-        {
-            switch (args[i++])
-            {
-                case "-title":
-                    title = args[i];
-                    break;
-                case "-description":
-                    description = args[i];
-                    break;
-                case "-deadline":
-                    deadlineString = args[i];
-                    break;
-            }
-        }
-
-        deadline = new Date(deadlineString);
-
-        return new NewTaskCommand(title, description, deadline, taskList);
+        return taskList;
     }
 
-    private EditTaskCommand parseEditTaskCommand(String[] args)
+    DataSource getDataSource()
     {
-        int index;
-        String field;
-        String value;
-
-        index = Integer.parseInt(args[1]) - 1;
-        field = args[2].substring(1);
-        value = args[3];
-
-        return new EditTaskCommand(taskList, index, field, value);
-    }
-
-    private RemoveTaskCommand parseRemoveTaskCommand(String[] args)
-    {
-        int index = Integer.parseInt(args[1]) - 1;
-        return new RemoveTaskCommand(taskList, index);
-    }
-
-    private Command parseShowCommand(String[] args)
-    {
-        switch (args[1])
-        {
-            case "task":
-                return new ShowTaskCommand(taskList.get(Integer.parseInt(args[2]) - 1));
-            case "tasks":
-                return new ShowListCommand(taskList);
-        }
-        return null;
+        return dataSource;
     }
 }

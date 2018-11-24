@@ -12,9 +12,14 @@ class CommitCommand implements Command
 {
     private final DataSource dataSource;
 
-    CommitCommand(DataSource dataSource)
+    private CommitCommand(DataSource dataSource)
     {
         this.dataSource = dataSource;
+    }
+
+    static Command parse(String[] args)
+    {
+        return new CommitCommand(UI.instance().getDataSource());
     }
 
     @Override
