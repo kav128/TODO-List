@@ -6,43 +6,42 @@
 
 package com.kav128.todo;
 
-import com.kav128.data.DataReader;
-import com.kav128.data.DataSource;
-import com.kav128.data.DataWriter;
-import com.kav128.data.Date;
+import com.kav128.data.DataRecord;
+import com.kav128.data.TasksSingleDAO;
 import com.kav128.todo.data.TaskModifyTrigger;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.util.UUID;
 
 public class TaskList implements Iterable<Task>
 {
     private final List<Task> taskList;
-    private final DataReader reader;
-    private final DataWriter writer;
+    private final TasksSingleDAO dao;
 
-    public TaskList(DataSource source)
+    public TaskList(TasksSingleDAO dao)
     {
         // DAL, layer architecture, facade,
-        this.reader = source.getReader();
-        this.writer = source.getWriter();
         taskList = new ArrayList<>();
+        this.dao = dao;
     }
 
-    public Task createTask(String title, String description, Date deadline)
+    public Task createTask(String title, String description, LocalDate deadline)
     {
-        UUID uuid = writer.newRecord();
-        TaskModifyTrigger trigger = new TaskModifyTrigger(writer, uuid);
-        Task task = new Task(uuid, title, description, deadline, false, trigger);
-        taskList.add(task);
-        writer.setField("title", title);
-        writer.setField("description", description);
-        writer.setField("deadline", deadline);
-        writer.setField("completed", false);
-        writer.accept();
-        return task;
+        try
+        {
+            int id = dao.insertTask(title, description, deadline);
+            TaskModifyTrigger trigger = new TaskModifyTrigger(dao, id);
+            Task task = new Task(id, title, description, deadline, false, trigger);
+            taskList.add(task);
+            return task;
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+            return null;
+        }
     }
 
     public Task get(int index)
@@ -52,9 +51,16 @@ public class TaskList implements Iterable<Task>
 
     public void remove(int index)
     {
-        Task task = taskList.get(index);
-        taskList.remove(task);
-        writer.remove(task.getUuid());
+        try
+        {
+            Task task = taskList.get(index);
+            dao.deleteTask(task.getId());
+            taskList.remove(task);
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -65,16 +71,24 @@ public class TaskList implements Iterable<Task>
 
     public void load()
     {
-        while (reader.read())
+        try
         {
-            UUID uuid = reader.getUUID();
-            String title = reader.getString("title");
-            String description = reader.getString("description");
-            Date deadline = reader.getDate("deadline");
-            Boolean completed = reader.getBoolean("completed");
-            TaskModifyTrigger trigger = new TaskModifyTrigger(writer, uuid);
-            Task task = new Task(uuid, title, description, deadline, completed, trigger);
-            taskList.add(task);
+            DataRecord[] taskRecords = dao.getTasks();
+            for (DataRecord record : taskRecords)
+            {
+                int id = Integer.parseInt(record.getValue("id"));
+                String title = record.getValue("title");
+                String description = record.getValue("description");
+                LocalDate deadline = LocalDate.parse(record.getValue("deadline"));
+                Boolean completed = Boolean.valueOf(record.getValue("completed"));
+                TaskModifyTrigger trigger = new TaskModifyTrigger(dao, id);
+                Task task = new Task(id, title, description, deadline, completed, trigger);
+                taskList.add(task);
+            }
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
         }
     }
 

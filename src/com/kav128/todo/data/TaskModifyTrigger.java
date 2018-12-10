@@ -6,47 +6,38 @@
 
 package com.kav128.todo.data;
 
-import com.kav128.data.DataWriter;
-import com.kav128.data.Date;
+import com.kav128.data.TasksSingleDAO;
 
-import java.util.UUID;
+import java.time.LocalDate;
 
 public class TaskModifyTrigger
 {
-    private final DataWriter writer;
-    private final UUID uuid;
+    private final TasksSingleDAO dao;
+    private final int id;
 
-    public TaskModifyTrigger(DataWriter writer, UUID uuid)
+    public TaskModifyTrigger(TasksSingleDAO dao, int id)
     {
-        this.writer = writer;
-        this.uuid = uuid;
+        this.dao = dao;
+        this.id = id;
     }
 
-    public void titleModified(String newValue)
+    public void titleModified(String newValue) throws Exception
     {
-        writer.modifyRecord(uuid);
-        writer.setField("title", newValue);
-        writer.accept();
+        dao.updateTaskTitle(id, newValue);
     }
 
-    public void descriptionModified(String newValue)
+    public void descriptionModified(String newValue) throws Exception
     {
-        writer.modifyRecord(uuid);
-        writer.setField("description", newValue);
-        writer.accept();
+        dao.updateTaskDescription(id, newValue);
     }
 
-    public void deadlineModified(Date newValue)
+    public void deadlineModified(LocalDate newValue) throws Exception
     {
-        writer.modifyRecord(uuid);
-        writer.setField("deadline", newValue);
-        writer.accept();
+        dao.updateTaskDeadline(id, newValue);
     }
 
-    public void completedModified(boolean newValue)
+    public void completedModified(boolean newValue) throws Exception
     {
-        writer.modifyRecord(uuid);
-        writer.setField("completed", newValue);
-        writer.accept();
+        dao.updateTaskCompleted(id, newValue);
     }
 }

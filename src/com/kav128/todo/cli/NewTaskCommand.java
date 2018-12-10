@@ -6,17 +6,18 @@
 
 package com.kav128.todo.cli;
 
-import com.kav128.data.Date;
 import com.kav128.todo.TaskList;
+
+import java.time.LocalDate;
 
 class NewTaskCommand implements Command
 {
     private final String title;
     private final String description;
-    private final Date deadline;
+    private final LocalDate deadline;
     private final TaskList taskList;
 
-    private NewTaskCommand(String title, String description, Date deadline, TaskList taskList)
+    private NewTaskCommand(String title, String description, LocalDate deadline, TaskList taskList)
     {
         this.title = title;
         this.description = description;
@@ -28,7 +29,7 @@ class NewTaskCommand implements Command
     {
         String title = "";
         String description = "";
-        Date deadline = null;
+        LocalDate deadline = null;
 
         for (int i = 0; i < args.length; i++)
         {
@@ -41,7 +42,7 @@ class NewTaskCommand implements Command
                     description = args[i];
                     break;
                 case "-deadline":
-                    deadline = new Date(args[i]);
+                    deadline = LocalDate.parse(args[i]);
                     break;
             }
         }

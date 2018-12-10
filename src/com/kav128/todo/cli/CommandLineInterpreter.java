@@ -6,7 +6,6 @@
 
 package com.kav128.todo.cli;
 
-import com.kav128.data.DataSource;
 import com.kav128.todo.TaskList;
 
 import java.util.Arrays;
@@ -15,13 +14,11 @@ import java.util.Scanner;
 public class CommandLineInterpreter
 {
     private final TaskList taskList;
-    private final DataSource dataSource;
     private final CommandFactory factory;
 
-    CommandLineInterpreter(TaskList taskList, DataSource dataSource)
+    CommandLineInterpreter(TaskList taskList)
     {
         this.taskList = taskList;
-        this.dataSource = dataSource;
         factory = new CommandFactory();
     }
 
@@ -54,10 +51,5 @@ public class CommandLineInterpreter
     TaskList getTaskList()
     {
         return taskList;
-    }
-
-    DataSource getDataSource()
-    {
-        return dataSource;
     }
 }

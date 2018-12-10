@@ -6,23 +6,22 @@
 
 package com.kav128.todo;
 
-import com.kav128.data.Date;
 import com.kav128.todo.data.TaskModifyTrigger;
 
-import java.util.UUID;
+import java.time.LocalDate;
 
 public class Task
 {
-    private final UUID uuid;
+    private final int id;
     private String title;
     private String description;
-    private Date deadline;
+    private LocalDate deadline;
     private boolean completed;
     private final TaskModifyTrigger modifyTrigger;
 
-    Task(UUID uuid, String title, String description, Date deadline, boolean completed, TaskModifyTrigger modifyTrigger)
+    Task(int id, String title, String description, LocalDate deadline, boolean completed, TaskModifyTrigger modifyTrigger)
     {
-        this.uuid = uuid;
+        this.id = id;
         this.title = title;
         this.description = description;
         this.deadline = deadline;
@@ -30,9 +29,9 @@ public class Task
         this.modifyTrigger = modifyTrigger;
     }
 
-    public UUID getUuid()
+    public int getId()
     {
-        return uuid;
+        return id;
     }
 
     public String getTitle()
@@ -42,8 +41,15 @@ public class Task
 
     public void setTitle(String title)
     {
-        this.title = title;
-        modifyTrigger.titleModified(title);
+        try
+        {
+            modifyTrigger.titleModified(title);
+            this.title = title;
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
     }
 
     public String getDescription()
@@ -53,19 +59,33 @@ public class Task
 
     public void setDescription(String description)
     {
-        this.description = description;
-        modifyTrigger.descriptionModified(description);
+        try
+        {
+            modifyTrigger.descriptionModified(description);
+            this.description = description;
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
     }
 
-    public Date getDeadline()
+    public LocalDate getDeadline()
     {
         return deadline;
     }
 
-    public void setDeadline(Date deadline)
+    public void setDeadline(LocalDate deadline)
     {
-        this.deadline = deadline;
-        modifyTrigger.deadlineModified(deadline);
+        try
+        {
+            modifyTrigger.deadlineModified(deadline);
+            this.deadline = deadline;
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
     }
 
     public boolean isCompleted()
@@ -75,8 +95,15 @@ public class Task
 
     public void setCompleted(boolean completed)
     {
-        this.completed = completed;
-        modifyTrigger.completedModified(completed);
+        try
+        {
+            modifyTrigger.completedModified(completed);
+            this.completed = completed;
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
     }
 
     public void setCompleted(String completedString)
@@ -88,7 +115,7 @@ public class Task
     public String toString()
     {
         return "Task{" +
-                "uuid=" + uuid +
+                "uuid=" + id +
                 ", title='" + title + '\'' +
                 ", description='" + description + '\'' +
                 ", deadline=" + deadline +

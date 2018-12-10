@@ -6,9 +6,10 @@
 
 package com.kav128.todo.cli;
 
-import com.kav128.data.Date;
 import com.kav128.todo.Task;
 import com.kav128.todo.TaskList;
+
+import java.time.LocalDate;
 
 class EditTaskCommand implements Command
 {
@@ -30,13 +31,9 @@ class EditTaskCommand implements Command
 
     static Command parse(String[] args)
     {
-        int index;
-        String field;
-        String value;
-
-        index = Integer.parseInt(args[0]) - 1;
-        field = args[1].substring(1);
-        value = args[2];
+        int index = Integer.parseInt(args[0]) - 1;
+        String field = args[1].substring(1);
+        String value = args[2];
 
         return new EditTaskCommand(UI.instance().getTaskList(), index, field, value);
     }
@@ -53,7 +50,7 @@ class EditTaskCommand implements Command
                 task.setDescription(newValue);
                 break;
             case "deadline":
-                task.setDeadline(new Date(newValue));
+                task.setDeadline(LocalDate.parse(newValue));
             case "completed":
                 task.setCompleted(newValue);
         }

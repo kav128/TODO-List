@@ -6,16 +6,15 @@
 
 package com.kav128.todo.cli;
 
-import com.kav128.data.DataSource;
 import com.kav128.todo.TaskList;
 
 public class UI
 {
     private static CommandLineInterpreter cli;
 
-    public static void init(TaskList taskList, DataSource source)
+    public static void init(TaskList taskList)
     {
-        cli = new CommandLineInterpreter(taskList, source);
+        cli = new CommandLineInterpreter(taskList);
     }
 
     public static CommandLineInterpreter instance()

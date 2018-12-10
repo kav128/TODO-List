@@ -21,7 +21,6 @@ class CommandFactory
         commandsByName.put("edit", EditTaskCommand::parse);
         commandsByName.put("remove", RemoveTaskCommand::parse);
         commandsByName.put("show", ShowCommand::parse);
-        commandsByName.put("commit", CommitCommand::parse);
     }
 
     Command getFromString(String commandName, String[] args)
