@@ -6,38 +6,58 @@
 
 package com.kav128.todo.data;
 
-import com.kav128.data.TasksSingleDAO;
+import com.kav128.data.TasksDAO;
+import com.kav128.todo.Session;
 
 import java.time.LocalDate;
 
 public class TaskModifyTrigger
 {
-    private final TasksSingleDAO dao;
+    private final TasksDAO dao;
     private final int id;
+    private final Session session;
 
-    public TaskModifyTrigger(TasksSingleDAO dao, int id)
+    public TaskModifyTrigger(TasksDAO dao, int id, Session session)
     {
         this.dao = dao;
         this.id = id;
+        this.session = session;
     }
 
-    public void titleModified(String newValue) throws Exception
+    private boolean allowModification()
     {
-        dao.updateTaskTitle(id, newValue);
+        return session.isOpened();
     }
 
-    public void descriptionModified(String newValue) throws Exception
+    public boolean titleModified(String newValue) throws Exception
     {
-        dao.updateTaskDescription(id, newValue);
+        boolean isAllowed = allowModification();
+        if (isAllowed)
+            dao.updateTaskTitle(id, newValue);
+        return isAllowed;
     }
 
-    public void deadlineModified(LocalDate newValue) throws Exception
+    public boolean descriptionModified(String newValue) throws Exception
     {
-        dao.updateTaskDeadline(id, newValue);
+        boolean isAllowed = allowModification();
+        if (isAllowed)
+            dao.updateTaskDescription(id, newValue);
+        return isAllowed;
     }
 
-    public void completedModified(boolean newValue) throws Exception
+    public boolean deadlineModified(LocalDate newValue) throws Exception
     {
-        dao.updateTaskCompleted(id, newValue);
+        boolean isAllowed = allowModification();
+        if (isAllowed)
+            dao.updateTaskDeadline(id, newValue);
+        return isAllowed;
+    }
+
+    public boolean completedModified(boolean newValue) throws Exception
+    {
+        boolean isAllowed = allowModification();
+        if (isAllowed)
+            dao.updateTaskCompleted(id, newValue);
+        return isAllowed;
     }
 }

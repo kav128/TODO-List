@@ -8,12 +8,12 @@ package com.kav128.todo.cli;
 
 import com.kav128.todo.TaskList;
 
-class RemoveTaskCommand implements Command
+public class CompletedCommand implements Command
 {
     private final TaskList taskList;
     private final int index;
 
-    private RemoveTaskCommand(TaskList taskList, int index)
+    private CompletedCommand(TaskList taskList, int index)
     {
         this.taskList = taskList;
         this.index = index;
@@ -22,12 +22,12 @@ class RemoveTaskCommand implements Command
     static Command parse(String[] args)
     {
         int index = Integer.parseInt(args[0]) - 1;
-        return new RemoveTaskCommand(UI.instance().getTaskList(), index);
+        return new CompletedCommand(UI.instance().getTaskList(), index);
     }
 
     @Override
     public void execute()
     {
-        //taskList.remove(index);
+        taskList.get(index).setCompleted(true);
     }
 }

@@ -7,7 +7,7 @@
 package com.kav128.todo;
 
 import com.kav128.data.DataRecord;
-import com.kav128.data.TasksSingleDAO;
+import com.kav128.data.TasksDAO;
 import com.kav128.todo.data.TaskModifyTrigger;
 
 import java.time.LocalDate;
@@ -18,21 +18,23 @@ import java.util.List;
 public class TaskList implements Iterable<Task>
 {
     private final List<Task> taskList;
-    private final TasksSingleDAO dao;
+    private final TasksDAO dao;
+    private final Session session;
 
-    public TaskList(TasksSingleDAO dao)
+    TaskList(TasksDAO dao, Session session)
     {
         // DAL, layer architecture, facade,
         taskList = new ArrayList<>();
         this.dao = dao;
+        this.session = session;
     }
 
-    public Task createTask(String title, String description, LocalDate deadline)
+    Task createTask(String title, String description, LocalDate deadline, int authorId)
     {
         try
         {
-            int id = dao.insertTask(title, description, deadline);
-            TaskModifyTrigger trigger = new TaskModifyTrigger(dao, id);
+            int id = dao.insertTask(title, description, deadline, authorId);
+            TaskModifyTrigger trigger = new TaskModifyTrigger(dao, id, session);
             Task task = new Task(id, title, description, deadline, false, trigger);
             taskList.add(task);
             return task;
@@ -49,7 +51,7 @@ public class TaskList implements Iterable<Task>
         return taskList.get(index);
     }
 
-    public void remove(int index)
+    void remove(int index)
     {
         try
         {
@@ -69,11 +71,11 @@ public class TaskList implements Iterable<Task>
         return taskList.iterator();
     }
 
-    public void load()
+    void load()
     {
         try
         {
-            DataRecord[] taskRecords = dao.getTasks();
+            DataRecord[] taskRecords = dao.getTasksByUser(session.getUser().getId());
             for (DataRecord record : taskRecords)
             {
                 int id = Integer.parseInt(record.getValue("id"));
@@ -81,7 +83,7 @@ public class TaskList implements Iterable<Task>
                 String description = record.getValue("description");
                 LocalDate deadline = LocalDate.parse(record.getValue("deadline"));
                 Boolean completed = Boolean.valueOf(record.getValue("completed"));
-                TaskModifyTrigger trigger = new TaskModifyTrigger(dao, id);
+                TaskModifyTrigger trigger = new TaskModifyTrigger(dao, id, session);
                 Task task = new Task(id, title, description, deadline, completed, trigger);
                 taskList.add(task);
             }

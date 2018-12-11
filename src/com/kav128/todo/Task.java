@@ -43,8 +43,10 @@ public class Task
     {
         try
         {
-            modifyTrigger.titleModified(title);
-            this.title = title;
+            if (modifyTrigger.titleModified(title))
+                this.title = title;
+            else
+                throw new RuntimeException("Session is closed");
         }
         catch (Exception e)
         {
@@ -61,8 +63,10 @@ public class Task
     {
         try
         {
-            modifyTrigger.descriptionModified(description);
-            this.description = description;
+            if (modifyTrigger.descriptionModified(description))
+                this.description = description;
+            else
+                throw new RuntimeException("Session is closed");
         }
         catch (Exception e)
         {
@@ -79,8 +83,10 @@ public class Task
     {
         try
         {
-            modifyTrigger.deadlineModified(deadline);
-            this.deadline = deadline;
+            if (modifyTrigger.deadlineModified(deadline))
+                this.deadline = deadline;
+            else
+                throw new RuntimeException("Session is closed");
         }
         catch (Exception e)
         {
@@ -97,8 +103,10 @@ public class Task
     {
         try
         {
-            modifyTrigger.completedModified(completed);
-            this.completed = completed;
+            if (modifyTrigger.completedModified(completed))
+                this.completed = completed;
+            else
+                throw new RuntimeException("Session is closed");
         }
         catch (Exception e)
         {

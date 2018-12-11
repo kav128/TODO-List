@@ -6,23 +6,29 @@
 
 package com.kav128;
 
-import com.kav128.data.DatabaseManager;
-import com.kav128.data.TasksSingleDAO;
-import com.kav128.todo.TaskList;
-import com.kav128.todo.cli.UI;
+import com.kav128.todo.Task;
+import com.kav128.todo.ToDoApp;
+
+import java.time.LocalDate;
 
 class Main
 {
     public static void main(String[] args) throws Exception
     {
-        try (DatabaseManager dbm = new DatabaseManager();
-             TasksSingleDAO dao = dbm.getTasksSingleDAO())
+        try (ToDoApp app = new ToDoApp())
         {
-            TaskList taskList = new TaskList(dao);
-            taskList.load();
+//            UI.init(app);
+//            UI.instance().run();
 
-            UI.init(taskList);
-            UI.instance().run();
+            app.login("user1", "111");
+            app.load();
+            Task task = app.getTaskList().get(0);
+            app.logout();
+            app.createTask("sef", "awef", LocalDate.now());
+
+            app.login("kav128", "111");
+            task.setDescription("kav128");
+            System.out.println(task);
         }
     }
 }

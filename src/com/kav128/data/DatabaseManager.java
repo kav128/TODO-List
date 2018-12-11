@@ -12,7 +12,7 @@ import java.sql.DriverManager;
 public class DatabaseManager implements AutoCloseable
 {
     private final String host = "localhost\\SQLEXPRESS";
-    private final String dbName = "ToDoS";
+    private final String dbName = "ToDo";
     private final String security = "integratedSecurity=true";
     private final String connectionString = String.format("jdbc:sqlserver://%s;databaseName=%s;%s", host, dbName, security);
 
@@ -39,11 +39,6 @@ public class DatabaseManager implements AutoCloseable
     public TasksDAO getTasksDAO() throws Exception
     {
         return new TasksDAO(connection);
-    }
-
-    public TasksSingleDAO getTasksSingleDAO() throws Exception
-    {
-        return new TasksSingleDAO(connection);
     }
 
     public void setAutoCommit(boolean autoCommit) throws Exception
