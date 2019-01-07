@@ -6,9 +6,8 @@
 
 package com.kav128.todo;
 
-import com.kav128.data.DataRecord;
-import com.kav128.data.TasksDAO;
 import com.kav128.todo.data.TaskModifyTrigger;
+import com.kav128.todo.data.TasksDAO;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -29,13 +28,16 @@ public class TaskList implements Iterable<Task>
         this.session = session;
     }
 
-    Task createTask(String title, String description, LocalDate deadline, int authorId)
+    Task createTask(String title, String description, LocalDate deadline, TaskPurpose purposeTag, User author)
     {
         try
         {
-            int id = dao.insertTask(title, description, deadline, authorId);
+            int id = dao.insertTask(title, description, deadline, author.getId());
+            int purpose = TaskPurposeUtils.toInt(purposeTag);
+            if (purpose >= 0)
+                dao.setTaskTag(id, "purpose", purpose);
             TaskModifyTrigger trigger = new TaskModifyTrigger(dao, id, session);
-            Task task = new Task(id, title, description, deadline, false, trigger);
+            Task task = new Task(id, title, description, deadline, false, purposeTag, author, trigger);
             taskList.add(task);
             return task;
         }
@@ -65,37 +67,24 @@ public class TaskList implements Iterable<Task>
         }
     }
 
+    void insert(Task task)
+    {
+        taskList.add(task);
+    }
+
     @Override
     public Iterator<Task> iterator()
     {
         return taskList.iterator();
     }
 
-    void load()
-    {
-        try
-        {
-            DataRecord[] taskRecords = dao.getTasksByUser(session.getUser().getId());
-            for (DataRecord record : taskRecords)
-            {
-                int id = Integer.parseInt(record.getValue("id"));
-                String title = record.getValue("title");
-                String description = record.getValue("description");
-                LocalDate deadline = LocalDate.parse(record.getValue("deadline"));
-                Boolean completed = Boolean.valueOf(record.getValue("completed"));
-                TaskModifyTrigger trigger = new TaskModifyTrigger(dao, id, session);
-                Task task = new Task(id, title, description, deadline, completed, trigger);
-                taskList.add(task);
-            }
-        }
-        catch (Exception e)
-        {
-            e.printStackTrace();
-        }
-    }
-
     public int count()
     {
         return taskList.size();
+    }
+
+    public void erase()
+    {
+        taskList.clear();
     }
 }

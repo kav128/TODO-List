@@ -6,7 +6,8 @@
 
 package com.kav128.todo.cli;
 
-import com.kav128.todo.TaskList;
+import com.kav128.todo.TaskPurpose;
+import com.kav128.todo.ToDoApp;
 
 import java.time.LocalDate;
 
@@ -15,14 +16,16 @@ class NewTaskCommand implements Command
     private final String title;
     private final String description;
     private final LocalDate deadline;
-    private final TaskList taskList;
+    private final TaskPurpose purpose;
+    private final ToDoApp app;
 
-    private NewTaskCommand(String title, String description, LocalDate deadline, TaskList taskList)
+    private NewTaskCommand(String title, String description, LocalDate deadline, TaskPurpose purpose, ToDoApp app)
     {
         this.title = title;
         this.description = description;
         this.deadline = deadline;
-        this.taskList = taskList;
+        this.purpose = purpose;
+        this.app = app;
     }
 
     static NewTaskCommand parse(String[] args)
@@ -30,6 +33,7 @@ class NewTaskCommand implements Command
         String title = "";
         String description = "";
         LocalDate deadline = null;
+        TaskPurpose purpose = TaskPurpose.noPurpose;
 
         for (int i = 0; i < args.length; i++)
         {
@@ -44,15 +48,18 @@ class NewTaskCommand implements Command
                 case "-deadline":
                     deadline = LocalDate.parse(args[i]);
                     break;
+                case "-purpose":
+                    purpose = TaskPurpose.valueOf(args[i]);
+                    break;
             }
         }
 
-        return new NewTaskCommand(title, description, deadline, UI.instance().getTaskList());
+        return new NewTaskCommand(title, description, deadline, purpose,UI.instance().getApp());
     }
 
     @Override
     public void execute()
     {
-        //taskList.createTask(title, description, deadline);
+        app.getTaskController().createTask(title, description, purpose, deadline);
     }
 }

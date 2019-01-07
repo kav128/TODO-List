@@ -22,5 +22,6 @@ class TaskPrinter
         printField(initialChar, "description", task.getDescription());
         printField(initialChar, "deadline", task.getDeadline().toString());
         printField(initialChar, "completed", Boolean.toString(task.isCompleted()));
+        printField(initialChar, "author", task.getAuthor().getUsername());
     }
 }

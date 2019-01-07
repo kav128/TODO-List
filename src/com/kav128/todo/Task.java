@@ -17,15 +17,19 @@ public class Task
     private String description;
     private LocalDate deadline;
     private boolean completed;
+    private TaskPurpose purposeTag;
+    private User author;
     private final TaskModifyTrigger modifyTrigger;
 
-    Task(int id, String title, String description, LocalDate deadline, boolean completed, TaskModifyTrigger modifyTrigger)
+    Task(int id, String title, String description, LocalDate deadline, boolean completed, TaskPurpose purposeTag, User author, TaskModifyTrigger modifyTrigger)
     {
         this.id = id;
         this.title = title;
         this.description = description;
         this.deadline = deadline;
         this.completed = completed;
+        this.purposeTag = purposeTag;
+        this.author = author;
         this.modifyTrigger = modifyTrigger;
     }
 
@@ -114,20 +118,45 @@ public class Task
         }
     }
 
+    public TaskPurpose getPurposeTag()
+    {
+        return purposeTag;
+    }
+
+    public void setPurposeTag(TaskPurpose purposeTag)
+    {
+        if (!modifyTrigger.allowModification())
+            throw new RuntimeException("Session is closed");
+
+        if (modifyTrigger.taskPurposeModified(purposeTag))
+            this.purposeTag = purposeTag;
+        else
+            if (modifyTrigger.taskPurposeSet(purposeTag))
+                this.purposeTag = purposeTag;
+
+    }
+
     public void setCompleted(String completedString)
     {
         setCompleted(Boolean.parseBoolean(completedString));
+    }
+
+    public User getAuthor()
+    {
+        return author;
     }
 
     @Override
     public String toString()
     {
         return "Task{" +
-                "uuid=" + id +
+                "id=" + id +
                 ", title='" + title + '\'' +
                 ", description='" + description + '\'' +
                 ", deadline=" + deadline +
+                ", purposeTag=" + purposeTag +
                 ", completed=" + completed +
+                ", author=" + author.getUsername() +
                 '}';
     }
 }

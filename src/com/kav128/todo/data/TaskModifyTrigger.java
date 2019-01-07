@@ -6,8 +6,9 @@
 
 package com.kav128.todo.data;
 
-import com.kav128.data.TasksDAO;
 import com.kav128.todo.Session;
+import com.kav128.todo.TaskPurpose;
+import com.kav128.todo.TaskPurposeUtils;
 
 import java.time.LocalDate;
 
@@ -24,12 +25,12 @@ public class TaskModifyTrigger
         this.session = session;
     }
 
-    private boolean allowModification()
+    public boolean allowModification()
     {
         return session.isOpened();
     }
 
-    public boolean titleModified(String newValue) throws Exception
+    public boolean titleModified(String newValue)
     {
         boolean isAllowed = allowModification();
         if (isAllowed)
@@ -37,7 +38,7 @@ public class TaskModifyTrigger
         return isAllowed;
     }
 
-    public boolean descriptionModified(String newValue) throws Exception
+    public boolean descriptionModified(String newValue)
     {
         boolean isAllowed = allowModification();
         if (isAllowed)
@@ -45,7 +46,7 @@ public class TaskModifyTrigger
         return isAllowed;
     }
 
-    public boolean deadlineModified(LocalDate newValue) throws Exception
+    public boolean deadlineModified(LocalDate newValue)
     {
         boolean isAllowed = allowModification();
         if (isAllowed)
@@ -53,11 +54,27 @@ public class TaskModifyTrigger
         return isAllowed;
     }
 
-    public boolean completedModified(boolean newValue) throws Exception
+    public boolean completedModified(boolean newValue)
     {
         boolean isAllowed = allowModification();
         if (isAllowed)
             dao.updateTaskCompleted(id, newValue);
         return isAllowed;
+    }
+
+    public boolean taskPurposeModified(TaskPurpose newValue)
+    {
+        boolean isAllowed = allowModification();
+        if (isAllowed)
+            return dao.updateTaskTag(id, "purpose", TaskPurposeUtils.toInt(newValue));
+        return false;
+    }
+
+    public boolean taskPurposeSet(TaskPurpose newValue)
+    {
+        boolean isAllowed = allowModification();
+        if (isAllowed)
+            return dao.setTaskTag(id, "purpose", TaskPurposeUtils.toInt(newValue));
+        return false;
     }
 }

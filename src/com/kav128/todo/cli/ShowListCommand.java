@@ -22,7 +22,7 @@ class ShowListCommand implements Command
     {
         for (int i = 0; i < taskList.count(); i++)
         {
-            System.out.println("{" + Integer.toString(i + 1) + "}");
+            System.out.println("{" + (i + 1) + "}");
             TaskPrinter.printTask('\t', taskList.get(i));
         }
     }

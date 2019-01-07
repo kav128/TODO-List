@@ -6,6 +6,7 @@
 
 package com.kav128.todo.cli;
 
+import com.kav128.todo.TaskController;
 import com.kav128.todo.TaskList;
 import com.kav128.todo.ToDoApp;
 
@@ -49,7 +50,7 @@ public class CommandLineInterpreter
     public void run()
     {
         Scanner scanner = new Scanner(System.in);
-        while (!app.isAuthorized())
+        while (!app.getUserController().isAuthorized())
         {
             System.out.println("(L)ogin (R)egister or (E)xit?");
             String s = scanner.nextLine();
@@ -66,8 +67,10 @@ public class CommandLineInterpreter
                     break;
             }
         }
-        taskList = app.getTaskList();
-        app.load();
+
+        TaskController taskController = app.getTaskController();
+        taskController.load();
+        taskList = taskController.getTaskList();
 
         while (true)
         {
@@ -99,13 +102,13 @@ public class CommandLineInterpreter
     private boolean login()
     {
         Credentials credentials = requestLoginAndPassword();
-        return app.login(credentials.login, credentials.password);
+        return app.getUserController().login(credentials.login, credentials.password);
     }
 
     private boolean register()
     {
         Credentials credentials = requestLoginAndPassword();
-        return app.register(credentials.login, credentials.password);
+        return app.getUserController().register(credentials.login, credentials.password);
     }
 
     private Command parseCommand(String commandLine)
@@ -117,5 +120,10 @@ public class CommandLineInterpreter
     TaskList getTaskList()
     {
         return taskList;
+    }
+
+    ToDoApp getApp()
+    {
+        return app;
     }
 }

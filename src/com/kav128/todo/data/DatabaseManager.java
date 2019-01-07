@@ -4,23 +4,27 @@
  * 2018
  */
 
-package com.kav128.data;
+package com.kav128.todo.data;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.util.Properties;
 
+//TODO UnitOfWork
 public class DatabaseManager implements AutoCloseable
 {
     private final String host = "localhost\\SQLEXPRESS";
     private final String dbName = "ToDo";
-    private final String security = "integratedSecurity=true";
-    private final String connectionString = String.format("jdbc:sqlserver://%s;databaseName=%s;%s", host, dbName, security);
+    private final String connectionString = String.format("jdbc:sqlserver://%s;databaseName=%s", host, dbName);
 
-    private Connection connection;
+    protected Connection connection;
 
     public DatabaseManager() throws Exception
     {
-        connection = DriverManager.getConnection(connectionString);
+        Properties props = new Properties();
+        props.setProperty("user", "todoapp");
+        props.setProperty("password", "todo");
+        connection = DriverManager.getConnection(connectionString, props);
         System.out.println("Connected");
     }
 
@@ -41,6 +45,11 @@ public class DatabaseManager implements AutoCloseable
         return new TasksDAO(connection);
     }
 
+    public NotificationsDAO getNotificationsDAO() throws Exception
+    {
+        return new NotificationsDAO(connection);
+    }
+
     public void setAutoCommit(boolean autoCommit) throws Exception
     {
         connection.setAutoCommit(autoCommit);
@@ -59,5 +68,10 @@ public class DatabaseManager implements AutoCloseable
     public void rollback() throws Exception
     {
         connection.rollback();
+    }
+
+    public Connection getConnection()
+    {
+        return connection;
     }
 }
