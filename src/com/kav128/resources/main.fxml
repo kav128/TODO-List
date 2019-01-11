@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
+<?import javafx.scene.text.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.Font?>
+
 <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="680.0" prefWidth="900.0" stylesheets="@style.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.kav128.todo.gui.MainController">
    <children>
       <Pane prefHeight="95.0" prefWidth="600.0">
@@ -27,9 +30,10 @@
                   </TableView>
                   <HBox prefHeight="39.0" prefWidth="270.0">
                      <children>
-                        <Button mnemonicParsing="false" onAction="#addClick" prefWidth="200.0" text="Добавить" />
-                        <Button fx:id="editButton" disable="true" mnemonicParsing="false" onAction="#editClick" prefWidth="200.0" text="Изменить" />
-                        <Button fx:id="deleteButton" disable="true" mnemonicParsing="false" onAction="#deleteClick" prefWidth="200.0" text="Удалить" />
+                        <Button mnemonicParsing="false" onAction="#addClick" prefWidth="115.0" text="Добавить" />
+                        <Button fx:id="editButton" disable="true" mnemonicParsing="false" onAction="#editClick" prefWidth="115.0" text="Изменить" />
+                        <Button fx:id="deleteButton" disable="true" mnemonicParsing="false" onAction="#deleteClick" prefWidth="115.0" text="Удалить" />
+                        <Button mnemonicParsing="false" onAction="#exportClicked" prefWidth="115.0" text="Экспорт" />
                      </children>
                   </HBox>
                </children>
@@ -54,5 +58,11 @@
             </VBox>
          </children>
       </HBox>
+      <ToolBar prefHeight="40.0" prefWidth="200.0">
+         <items>
+            <Label fx:id="backgroundLabel" text="Задача не назначена" />
+            <ProgressIndicator fx:id="backgroundIndicator" progress="0.0" />
+         </items>
+      </ToolBar>
    </children>
 </VBox>

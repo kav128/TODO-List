@@ -21,4 +21,6 @@ public interface TaskController
     void assign(Task task, User user);
 
     String getTaskTitle(int taskId);
+
+    BackgroundTask exportToXML(String filename);
 }

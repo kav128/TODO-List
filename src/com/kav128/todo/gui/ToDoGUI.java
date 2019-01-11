@@ -71,7 +71,6 @@ public class ToDoGUI
             mainController.setApp(app);
             mainController.setGui(this);
             loginController.setApp(app);
-            loginController.init();
             editorController.setApp(app);
             editorController.setGui(this);
             notificationsController.setApp(app);

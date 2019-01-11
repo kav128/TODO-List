@@ -113,4 +113,10 @@ class CTaskController implements TaskController
         DataRecord record = dao.getTaskByID(taskId);
         return record.getString("title");
     }
+
+    @Override
+    public BackgroundTask exportToXML(String filename)
+    {
+        return new TaskListExportBackgroundTask(app, filename);
+    }
 }

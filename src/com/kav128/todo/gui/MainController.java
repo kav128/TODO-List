@@ -44,6 +44,12 @@ public class MainController
     public Button completeButton;
 
     @FXML
+    public Label backgroundLabel;
+
+    @FXML
+    public ProgressIndicator backgroundIndicator;
+
+    @FXML
     private Label usernameLabel;
 
     @FXML
@@ -228,5 +234,16 @@ public class MainController
         Task task = taskTable.getSelectionModel().getSelectedItem();
         task.setCompleted(true);
         showTask(task);
+    }
+
+    @FXML
+    public void exportClicked()
+    {
+        TaskController tc = app.getTaskController();
+        String filename = app.getUserController().getCurUser().getUsername() + "export.xml";
+        BackgroundTask export = tc.exportToXML(filename);
+        ProgressListener listener = new MainSceneProgressListener(backgroundLabel, backgroundIndicator);
+        export.subscribe(listener);
+        export.run();
     }
 }
