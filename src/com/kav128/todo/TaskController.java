@@ -11,6 +11,7 @@ import com.kav128.todo.data.TaskModifyTrigger;
 import com.kav128.todo.data.TasksDAO;
 
 import java.time.LocalDate;
+import java.util.List;
 
 public class TaskController
 {
@@ -59,7 +60,8 @@ public class TaskController
     {
         try
         {
-            DataRecord[] taskRecords = dao.getTasksByUser(app.getUserController().getCurUser().getId());
+            UserController uc = app.getUserController();
+            DataRecord[] taskRecords = dao.getTasksByUser(uc.getCurUser().getId());
             taskList.erase();
             for (DataRecord record : taskRecords)
             {
@@ -68,12 +70,19 @@ public class TaskController
                 String description = record.getString("description");
                 LocalDate deadline = record.getDate("deadline");
                 Boolean completed = record.getBoolean("completed");
-                TaskModifyTrigger trigger = new TaskModifyTrigger(dao, id, app.getUserController().getSession());
+                TaskModifyTrigger trigger = new TaskModifyTrigger(dao, id, uc.getSession());
                 TaskPurpose purposeTag;
                 int purposeIntTag = dao.getTaskTag(id, "purpose");
                 purposeTag = TaskPurposeUtils.parseFromInt(purposeIntTag);
-                User author = app.getUserController().getUserById(dao.getTaskAuthor(id));
+                User author = uc.getUserById(dao.getTaskAuthor(id));
                 Task task = new Task(id, title, description, deadline, completed, purposeTag, author, trigger);
+
+                List<Integer> userIDs = dao.getAssignedUserIDs(id);
+                for (int userID : userIDs)
+                {
+                    User user = uc.getUserById(userID);
+                    task.addAssignedUser(user);
+                }
                 taskList.insert(task);
             }
         }
@@ -91,5 +100,11 @@ public class TaskController
     public void assign(Task task, User user)
     {
         app.getNotificationController().addNotification(app.getUserController().getCurUser(), user, task);
+    }
+
+    public String getTaskTitle(int taskId)
+    {
+        DataRecord record = dao.getTaskByID(taskId);
+        return record.getString("title");
     }
 }

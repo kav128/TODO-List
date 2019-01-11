@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+<HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="450.0" prefWidth="800.0" stylesheets="@style.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.kav128.todo.gui.NotificationsController">
+   <children>
+      <ListView fx:id="notificationsList" prefHeight="400.0" prefWidth="400.0" />
+      <Pane prefHeight="459.0" prefWidth="530.0">
+         <children>
+            <Label fx:id="titleLabel" alignment="TOP_LEFT" layoutX="14.0" layoutY="14.0" prefHeight="113.0" prefWidth="438.0" text="Title" wrapText="true">
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </Label>
+            <Label fx:id="senderLabel" layoutX="14.0" layoutY="127.0" text="Sender" />
+            <Button fx:id="acceptButton" layoutX="302.0" layoutY="405.0" mnemonicParsing="false" onAction="#acceptClick" prefHeight="31.0" prefWidth="150.0" text="Принять" />
+         </children>
+      </Pane>
+   </children>
+</HBox>

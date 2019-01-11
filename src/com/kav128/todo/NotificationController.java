@@ -39,11 +39,22 @@ public class NotificationController
         return dao.getUnseenNotificationCount(session.getUser().getId());
     }
 
-    public Notification[] getNotifications()
+    public Notification[] getUnseenNotifications()
     {
         if (!session.isOpened())
             throw new RuntimeException("Session is closed");
         DataRecord[] notifications = dao.getUnseenNotificationsByUser(session.getUser().getId());
+        List<Notification> notificationList = new ArrayList<>();
+        for (DataRecord notification : notifications)
+            notificationList.add(getNotificationFromDataRecord(notification));
+        return notificationList.toArray(new Notification[0]);
+    }
+
+    public Notification[] getNotifications()
+    {
+        if (!session.isOpened())
+            throw new RuntimeException("Session is closed");
+        DataRecord[] notifications = dao.getNotificationsByUser(session.getUser().getId());
         List<Notification> notificationList = new ArrayList<>();
         for (DataRecord notification : notifications)
             notificationList.add(getNotificationFromDataRecord(notification));
@@ -55,9 +66,11 @@ public class NotificationController
         int id = notificationRecord.getInt("id");
         int sender = notificationRecord.getInt("senderUser");
         int taskId = notificationRecord.getInt("taskId");
+        boolean seen = notificationRecord.getBoolean("seen");
+        boolean accepted = notificationRecord.getBoolean("accepted");
 
         User user = app.getUserController().getUserById(sender);
-        return new Notification(id, user, taskId);
+        return new Notification(this, id, user, taskId, seen, accepted);
     }
 
     public void addNotification(User sender, User user,  Task task)
@@ -68,5 +81,10 @@ public class NotificationController
     public void acceptNotification(Notification notification)
     {
         dao.acceptNotification(notification.getId());
+    }
+
+    public void setSeen(Notification notification)
+    {
+        dao.setSeen(notification.getId());
     }
 }

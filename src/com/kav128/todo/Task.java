@@ -9,6 +9,8 @@ package com.kav128.todo;
 import com.kav128.todo.data.TaskModifyTrigger;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Task
 {
@@ -20,6 +22,7 @@ public class Task
     private TaskPurpose purposeTag;
     private User author;
     private final TaskModifyTrigger modifyTrigger;
+    private List<User> assignedUsers;
 
     Task(int id, String title, String description, LocalDate deadline, boolean completed, TaskPurpose purposeTag, User author, TaskModifyTrigger modifyTrigger)
     {
@@ -31,6 +34,7 @@ public class Task
         this.purposeTag = purposeTag;
         this.author = author;
         this.modifyTrigger = modifyTrigger;
+        assignedUsers = new ArrayList<>();
     }
 
     public int getId()
@@ -144,6 +148,16 @@ public class Task
     public User getAuthor()
     {
         return author;
+    }
+
+    void addAssignedUser(User user)
+    {
+        assignedUsers.add(user);
+    }
+
+    public List<User> getAssignedUsers()
+    {
+        return new ArrayList<>(assignedUsers);
     }
 
     @Override

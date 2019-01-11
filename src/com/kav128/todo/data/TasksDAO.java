@@ -8,8 +8,11 @@ package com.kav128.todo.data;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 public class TasksDAO extends AbstractDAO
 {
@@ -36,7 +39,7 @@ public class TasksDAO extends AbstractDAO
     public DataRecord getTaskByID(int id)
     {
         try(PreparedStatement getTaskByIdStatement = dbConnection.prepareStatement(
-                "SELECT id, title, description, deadline, completed AS author\n" +
+                "SELECT id, title, description, deadline, completed\n" +
                     "FROM Tasks\n" +
                     "WHERE id = ?"))
         {
@@ -220,6 +223,27 @@ public class TasksDAO extends AbstractDAO
         }
     }
 
+    public List<Integer> getAssignedUserIDs(int taskId)
+    {
+        try(PreparedStatement getAssignedUserIDsStatement = dbConnection.prepareStatement(
+                "SELECT userID\n" +
+                    "FROM TaskUser\n" +
+                    "WHERE role > 0 AND taskId = ?"))
+        {
+            getAssignedUserIDsStatement.setInt(1, taskId);
+            ResultSet resultSet = getAssignedUserIDsStatement.executeQuery();
+            List<Integer> ids = new ArrayList<>();
+            while (resultSet.next())
+                ids.add(resultSet.getInt(1));
+            return ids;
+        }
+        catch (SQLException e)
+        {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
     public int getTaskGroupId(String taskGroupName)
     {
         try(PreparedStatement getTaskGroupIdStatement = dbConnection.prepareStatement(
@@ -335,9 +359,4 @@ public class TasksDAO extends AbstractDAO
         }
     }
 
-    private void closeStatements(PreparedStatement[] statements) throws Exception
-    {
-        for (PreparedStatement statement : statements)
-            statement.close();
-    }
 }

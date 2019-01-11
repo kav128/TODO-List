@@ -1,0 +1,16 @@
+.bad {
+    -fx-background-color: #FFCACA;
+}
+
+.good {
+    -fx-background-color: #A9F16C;
+}
+
+.unseen {
+    -fx-background-color: #FFC373;
+}
+
+.seen {
+    -fx-font-weight: italic;
+    -fx-text-fill: #777777;
+}

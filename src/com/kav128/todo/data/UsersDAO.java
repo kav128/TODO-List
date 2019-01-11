@@ -47,21 +47,19 @@ public class UsersDAO extends AbstractDAO
 
     public DataRecord getUserByName(String name)
     {
-        DataRecord record;
         try (PreparedStatement getUserByIdStatement = dbConnection.prepareStatement(
                 "SELECT id, name\n" +
                     "FROM Users\n" +
                     "WHERE name = ?"))
         {
             getUserByIdStatement.setString(1, name);
-            record = getSingleRecord(getUserByIdStatement);
+            return getSingleRecord(getUserByIdStatement);
         }
         catch (SQLException e)
         {
             e.printStackTrace();
-            record = null;
+            return null;
         }
-        return record;
     }
 
     private static byte[] getHash(String value) throws NoSuchAlgorithmException

@@ -102,6 +102,8 @@ public class UserController implements AutoCloseable
         if (userList.containsUser(name))
             return userList.getUserByName(name);
         DataRecord record = dao.getUserByName(name);
+        if (record == null)
+            return null;
         int id = record.getInt("id");
         return userList.putUser(id, name);
     }

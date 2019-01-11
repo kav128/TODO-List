@@ -15,7 +15,7 @@ public class DataRecord
 {
     private final Map<String, String> data;
 
-    DataRecord()
+    public DataRecord()
     {
         data = new HashMap<>();
     }
@@ -57,7 +57,7 @@ public class DataRecord
 
     public boolean getBoolean(String field)
     {
-        return Boolean.parseBoolean(field);
+        return data.get(field).equals("1");
     }
 
     public boolean hasField(String field)
