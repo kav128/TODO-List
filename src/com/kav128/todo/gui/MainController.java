@@ -50,6 +50,9 @@ public class MainController
     public ProgressIndicator backgroundIndicator;
 
     @FXML
+    public Button exportButton;
+
+    @FXML
     private Label usernameLabel;
 
     @FXML
@@ -242,7 +245,7 @@ public class MainController
         TaskController tc = app.getTaskController();
         String filename = app.getUserController().getCurUser().getUsername() + "export.xml";
         BackgroundTask export = tc.exportToXML(filename);
-        ProgressListener listener = new MainSceneProgressListener(backgroundLabel, backgroundIndicator);
+        ProgressListener listener = new MainSceneProgressListener(backgroundLabel, backgroundIndicator, exportButton);
         export.subscribe(listener);
         export.run();
     }

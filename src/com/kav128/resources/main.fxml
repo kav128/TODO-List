@@ -33,7 +33,7 @@
                         <Button mnemonicParsing="false" onAction="#addClick" prefWidth="115.0" text="Добавить" />
                         <Button fx:id="editButton" disable="true" mnemonicParsing="false" onAction="#editClick" prefWidth="115.0" text="Изменить" />
                         <Button fx:id="deleteButton" disable="true" mnemonicParsing="false" onAction="#deleteClick" prefWidth="115.0" text="Удалить" />
-                        <Button mnemonicParsing="false" onAction="#exportClicked" prefWidth="115.0" text="Экспорт" />
+                        <Button fx:id="exportButton" mnemonicParsing="false" onAction="#exportClicked" prefWidth="115.0" text="Экспорт" />
                      </children>
                   </HBox>
                </children>
