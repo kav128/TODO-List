@@ -6,7 +6,7 @@
 
 package com.kav128.todo.gui;
 
-import com.kav128.todo.*;
+import com.kav128.todo.core.*;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;

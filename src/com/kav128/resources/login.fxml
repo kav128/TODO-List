@@ -1,8 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
+
 <AnchorPane prefHeight="450.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.kav128.todo.gui.LoginController">
    <children>
        <TextField fx:id="loginTextField" layoutX="217.0" layoutY="225.0" prefHeight="31.0" prefWidth="238.0" promptText="Login" stylesheets="@style.css" />
@@ -22,5 +26,6 @@
        <Label layoutX="147.0" layoutY="230.0" text="Login" />
        <Label layoutX="147.0" layoutY="274.0" text="Password" />
        <Label fx:id="incorrectLabel" layoutX="147.0" layoutY="307.0" text="Incorrect login/password" textFill="RED" visible="false" />
+      <ProgressIndicator fx:id="progressIndicator" layoutX="476.0" layoutY="324.0" progress="0.0" />
    </children>
 </AnchorPane>

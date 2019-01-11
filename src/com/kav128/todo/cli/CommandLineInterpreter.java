@@ -6,9 +6,9 @@
 
 package com.kav128.todo.cli;
 
-import com.kav128.todo.TaskController;
-import com.kav128.todo.TaskList;
-import com.kav128.todo.ToDoApp;
+import com.kav128.todo.core.TaskController;
+import com.kav128.todo.core.TaskList;
+import com.kav128.todo.core.ToDoApp;
 
 import java.util.Arrays;
 import java.util.Scanner;

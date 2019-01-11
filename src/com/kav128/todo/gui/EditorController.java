@@ -6,10 +6,10 @@
 
 package com.kav128.todo.gui;
 
-import com.kav128.todo.Task;
-import com.kav128.todo.ToDoApp;
-import com.kav128.todo.User;
-import com.kav128.todo.UserController;
+import com.kav128.todo.core.Task;
+import com.kav128.todo.core.ToDoApp;
+import com.kav128.todo.core.User;
+import com.kav128.todo.core.UserController;
 import com.kav128.todo.data.DataRecord;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;

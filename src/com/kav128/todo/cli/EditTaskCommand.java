@@ -6,8 +6,8 @@
 
 package com.kav128.todo.cli;
 
-import com.kav128.todo.Task;
-import com.kav128.todo.TaskList;
+import com.kav128.todo.core.Task;
+import com.kav128.todo.core.TaskList;
 
 import java.time.LocalDate;
 

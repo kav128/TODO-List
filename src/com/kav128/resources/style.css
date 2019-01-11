@@ -11,6 +11,5 @@
 }
 
 .seen {
-    -fx-font-weight: italic;
     -fx-text-fill: #777777;
 }

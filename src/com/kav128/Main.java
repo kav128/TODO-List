@@ -6,7 +6,7 @@
 
 package com.kav128;
 
-import com.kav128.todo.ToDoApp;
+import com.kav128.todo.core.ToDoApp;
 import com.kav128.todo.cli.UI;
 import com.kav128.todo.gui.ToDoGUI;
 import javafx.application.Application;
@@ -42,11 +42,11 @@ public class Main extends Application
         ToDoGUI gui = new ToDoGUI(
                 app,
                 primaryStage,
-                getLoaderFromFile("todo/gui/main.fxml"),
-                getLoaderFromFile("todo/gui/login.fxml"),
-                getLoaderFromFile("todo/gui/editor.fxml"),
-                getLoaderFromFile("todo/gui/prompt.fxml"),
-                getLoaderFromFile("todo/gui/notifications.fxml"));
+                getLoaderFromFile("resources/main.fxml"),
+                getLoaderFromFile("resources/login.fxml"),
+                getLoaderFromFile("resources/editor.fxml"),
+                getLoaderFromFile("resources/prompt.fxml"),
+                getLoaderFromFile("resources/notifications.fxml"));
         gui.run();
     }
 

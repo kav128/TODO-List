@@ -6,7 +6,7 @@
 
 package com.kav128.todo.gui;
 
-import com.kav128.todo.*;
+import com.kav128.todo.core.*;
 import com.kav128.todo.data.DataRecord;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -71,6 +71,7 @@ public class ToDoGUI
             mainController.setApp(app);
             mainController.setGui(this);
             loginController.setApp(app);
+            loginController.init();
             editorController.setApp(app);
             editorController.setGui(this);
             notificationsController.setApp(app);

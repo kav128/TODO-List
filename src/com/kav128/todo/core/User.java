@@ -4,7 +4,7 @@
  * 2018
  */
 
-package com.kav128.todo;
+package com.kav128.todo.core;
 
 public class User
 {

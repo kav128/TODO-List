@@ -6,9 +6,9 @@
 
 package com.kav128.todo.data;
 
-import com.kav128.todo.Session;
-import com.kav128.todo.TaskPurpose;
-import com.kav128.todo.TaskPurposeUtils;
+import com.kav128.todo.core.Session;
+import com.kav128.todo.core.TaskPurpose;
+import com.kav128.todo.core.TaskPurposeUtils;
 
 import java.time.LocalDate;
 

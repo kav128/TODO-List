@@ -6,9 +6,9 @@
 
 package com.kav128.todo.gui;
 
-import com.kav128.todo.Notification;
-import com.kav128.todo.NotificationController;
-import com.kav128.todo.ToDoApp;
+import com.kav128.todo.core.Notification;
+import com.kav128.todo.core.NotificationController;
+import com.kav128.todo.core.ToDoApp;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -85,6 +85,8 @@ public class NotificationsController
 
     void init()
     {
+        titleLabel.setText("");
+        senderLabel.setText("");
         notificationsList.getItems().clear();
         NotificationController nc = app.getNotificationController();
         Notification[] notifications = nc.getNotifications();

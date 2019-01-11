@@ -6,7 +6,7 @@
 
 package com.kav128.todo.cli;
 
-import com.kav128.todo.Task;
+import com.kav128.todo.core.Task;
 
 class ShowTaskCommand implements Command
 {

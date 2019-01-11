@@ -1,10 +1,10 @@
 /*
  * Created by kav128
  * ITMO University, St Petersburg, Russia
- * 2018
+ * 2019
  */
 
-package com.kav128.todo;
+package com.kav128.todo.core;
 
 import com.kav128.todo.data.TaskModifyTrigger;
 import com.kav128.todo.data.TasksDAO;
