@@ -6,24 +6,26 @@
 
 package com.kav128.todo.core;
 
+import com.kav128.todo.data.DBManagerFactory;
 import com.kav128.todo.data.DatabaseManager;
 
 public class ToDoApp implements AutoCloseable
 {
     private DatabaseManager dbManager;
 
-    private UserController userController;
+    private CUserController userController;
     private TaskController taskController;
     private NotificationController notificationController;
 
     public ToDoApp() throws Exception
     {
-        dbManager = new DatabaseManager();
+        dbManager = DBManagerFactory.getDBManager();
 
-        userController = new UserController(dbManager);
+        assert dbManager != null;
+        userController = new CUserController(dbManager);
         userController.setOnLogin((Session session) -> {
-            taskController = new TaskController(this, session);
-            notificationController = new NotificationController(this, session);
+            taskController = new CTaskController(this, session);
+            notificationController = new CNotificationController(this, session);
         });
         userController.setOnLogout((User user) -> {
             notificationController = null;
@@ -32,6 +34,11 @@ public class ToDoApp implements AutoCloseable
     }
 
     public UserController getUserController()
+    {
+        return userController;
+    }
+
+    public CUserController getUserControllerClass()
     {
         return userController;
     }

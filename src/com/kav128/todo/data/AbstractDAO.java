@@ -18,7 +18,7 @@ public abstract class AbstractDAO
 {
     protected final Connection dbConnection;
 
-    AbstractDAO(Connection dbConnection) throws SQLException
+    AbstractDAO(Connection dbConnection)
     {
         this.dbConnection = dbConnection;
     }
